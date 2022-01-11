@@ -1,4 +1,5 @@
-const { verify } = require("jsonwebtoken");
+// const { verify } = require("jsonwebtoken");
+import verify from "jsonwebtoken";
 
 const validateToken = (req, res, next) => {
   const accessToken = req.header("accessToken");
@@ -36,4 +37,4 @@ const adimnToken = (req, res, next) => {
   }
 };
 
-module.exports = { validateToken, adimnToken };
+export { validateToken, adimnToken };

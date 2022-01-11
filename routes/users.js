@@ -1,17 +1,28 @@
-const jwt = require("jsonwebtoken");
-const config = require("config");
-const bcrypt = require("bcrypt");
-const _ = require("lodash");
-const mongoose = require("mongoose");
-const express = require("express");
-const Joi = require("joi");
+// const jwt = require("jsonwebtoken");
+// const config = require("config");
+// const bcrypt = require("bcrypt");
+// const _ = require("lodash");
+// const mongoose = require("mongoose");
+// const express = require("express");
+// const Joi = require("joi");
 
-const { sign } = require("jsonwebtoken");
-const { validateToken } = require("../midleware/UserMiddleware");
+import Joi from "joi";
+
+import config from "config";
+import bcrypt from "bcrypt";
+import _ from "lodash";
+import express from "express";
+
+import jwt from "jsonwebtoken";
+import sign from "jsonwebtoken";
+
+import User from "../modals/users.js";
+// const { sign } = require("jsonwebtoken");
+// const { validateToken } = require("../midleware/UserMiddleware");
+
+import { validateToken, adimnToken } from "../midleware/UserMiddleware.js";
 
 const router = express.Router();
-
-const User = require("../modals/users");
 
 router.get("/", validateToken, async (req, res) => {
   try {
@@ -107,4 +118,4 @@ router.delete("/delete/:id", validateToken, async (req, res) => {
   res.json("user deleted");
 });
 
-module.exports = router;
+export default router;

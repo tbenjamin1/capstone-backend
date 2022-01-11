@@ -1,9 +1,10 @@
-const mongoose = require("mongoose");
-const express = require("express");
-
-const router = express.Router();
-const Joi = require("joi");
-const Course = require("../modals/course");
+// const mongoose = require("mongoose");
+// import { Mongoose } from "mongoose";
+// const express = require("express");
+import Express from "express";
+import Joi from "joi";
+import Course from "../modals/course.js";
+const router = Express.Router();
 
 router.get("/", async (req, res) => {
   try {
@@ -78,4 +79,4 @@ router.delete("./:id", async (req, res) => {
 //   return JoiSchema.validate(course);
 // };
 
-module.exports = router;
+export default router;

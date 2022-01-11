@@ -1,17 +1,25 @@
-const config = require("config");
-const mongoose = require("mongoose");
+// const config = require("config");
+import config from "config";
 
-const helmet = require("helmet");
+import mongoose from "mongoose";
+// const mongoose = require("mongoose");
 
-const morgan = require("morgan");
+// const helmet = require("helmet");
+import helmet from "helmet";
 
-const express = require("express");
+// const morgan = require("morgan");
+
+// const express = require("express");
+import express from "express";
+import courses from "./routes/courses.js";
+import users from "./routes/users.js";
+import home from "./routes/home.js";
+
+// const courses = require("./routes/courses");
+// const users = require("./routes/users");
+// const home = require("./routes/home");
 
 const app = express();
-
-const courses = require("./routes/courses");
-const users = require("./routes/users");
-const home = require("./routes/home");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
