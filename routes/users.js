@@ -1,0 +1,110 @@
+const jwt = require("jsonwebtoken");
+const config = require("config");
+const bcrypt = require("bcrypt");
+const _ = require("lodash");
+const mongoose = require("mongoose");
+const express = require("express");
+const Joi = require("joi");
+
+const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../midleware/UserMiddleware");
+
+const router = express.Router();
+
+const User = require("../modals/users");
+
+router.get("/", validateToken, async (req, res) => {
+  try {
+    const users = await User.find().sort("name");
+    res.send(users);
+  } catch (error) {
+    res.send("error", error);
+  }
+});
+
+router.post("/", async (req, res) => {
+  const { error } = validateUser(req.body);
+  if (error) return res.status(400).send("name should be required ");
+
+  let user = await User.findOne({ email: req.body.email });
+  if (user) return res.status(400).send("arleady user registered");
+
+  user = new User(
+    _.pick(req.body, [
+      "firstName",
+      "lastName",
+      "email",
+      "password",
+      "confPassword",
+    ])
+  );
+
+  // if(user.password != user.confPassword){
+  //   return res.json("Password donnot match")
+  // }
+
+  const salt = await bcrypt.genSalt(10);
+
+  user.password = await bcrypt.hash(user.password, salt);
+
+  user = await user.save();
+
+  const token = jwt.sign({ _id: user._id }, config.has("jwtPrivateKey"));
+
+  // res.header("x-auth-token", token).send(_.pick(user, ["name", "email"]));
+
+  res.json("user registered");
+});
+
+const validateUser = (userdata) => {
+  const JoiSchema = Joi.object({
+    firstName: Joi.string().min(6).max(50).required(),
+    lastName: Joi.string().min(6).max(50).required(),
+    email: Joi.string().min(6).max(255).required().email(),
+    password: Joi.string().min(6).max(255).required(),
+  });
+
+  return JoiSchema.validate(userdata);
+};
+
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ error: "user doesn't exist" });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+
+    const token = user.generateAuthToken();
+    // const accessToken = sign(
+    //   { email: user.email, id: user.id, name: user.name },
+    //   "UsersAuth"
+    // );
+
+    res.json({
+      token: accessToken,
+      name: user.name,
+      id: user.id,
+      email: user.email,
+    });
+
+    if (!validPassword)
+      return res.status(400).send("invalid email or password");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//delete
+router.delete("/delete/:id", validateToken, async (req, res) => {
+  const user = await User.findByIdAndRemove(req.params.id);
+
+  if (!user)
+    return res.status(404).send("the user wuth the given id was not found ");
+
+  res.json("user deleted");
+});
+
+module.exports = router;
