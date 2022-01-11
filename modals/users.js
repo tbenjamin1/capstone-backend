@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+// import sign from "jsonwebtoken";
 
 // const Joi = require("joi");
 // schema for our database
@@ -32,13 +33,10 @@ const usersSchema = new mongoose.Schema({
   },
 });
 
-usersSchema.methods.generateAuthToken = function () {
-  const accessToken = sign(
-    { email: user.email, id: this.id, name: user.name },
-    "UsersAuth"
-  );
-  return accessToken;
-};
+// usersSchema.methods.generateAuthToken = function () {
+//   const accessToken = sign({ _id: this._id }, "UsersAuth");
+//   return accessToken;
+// };
 
 // end here
 

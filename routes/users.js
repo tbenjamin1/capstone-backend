@@ -14,8 +14,7 @@ import _ from "lodash";
 import express from "express";
 
 import jwt from "jsonwebtoken";
-import sign from "jsonwebtoken";
-
+import jsonwebtoken from "jsonwebtoken";
 import User from "../modals/users.js";
 // const { sign } = require("jsonwebtoken");
 // const { validateToken } = require("../midleware/UserMiddleware");
@@ -59,10 +58,22 @@ router.post("/", async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
 
   user = await user.save();
+  const accessToken = jwt.sign(
+    { email: user.email, id: user.id, name: user.name },
+    "UsersAuth"
+  );
 
-  const token = jwt.sign({ _id: user._id }, config.has("jwtPrivateKey"));
+  res.status(200).json({
+    token: accessToken,
+    //  name: user.name,
+    id: user.id,
+    email: user.email,
+  });
 
-  // res.header("x-auth-token", token).send(_.pick(user, ["name", "email"]));
+  // const accessToken = jwt.sign({ _id: user._id }, config.has("jwtPrivateKey"));
+  // const accessToken = user.generateAuthToken();
+
+  // res.header("x-auth-token", accessToken).send(_.pick(user, ["name", "email"]));
 
   res.json("user registered");
 });
@@ -88,11 +99,11 @@ router.post("/login", async (req, res) => {
 
     const validPassword = await bcrypt.compare(password, user.password);
 
-    const token = user.generateAuthToken();
-    // const accessToken = sign(
-    //   { email: user.email, id: user.id, name: user.name },
-    //   "UsersAuth"
-    // );
+    // const accessToken = user.generateAuthToken();
+    const accessToken = jwt.sign(
+      { email: user.email, id: user.id, name: user.name },
+      "UsersAuth"
+    );
 
     res.json({
       token: accessToken,
@@ -104,7 +115,8 @@ router.post("/login", async (req, res) => {
     if (!validPassword)
       return res.status(400).send("invalid email or password");
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).send("Server Error");
   }
 });
 
