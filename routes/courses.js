@@ -1,12 +1,36 @@
-// const mongoose = require("mongoose");
-// import { Mongoose } from "mongoose";
-// const express = require("express");
 import Express from "express";
 import Joi from "joi";
+
+import { adimnToken, auth } from "../midleware/auth.js";
 import Course from "../modals/course.js";
+
 const router = Express.Router();
 
-router.get("/", async (req, res) => {
+// swagger documentation
+
+// /**
+//  * @swagger
+//  * components:
+//  *  schemas:
+//  *   arcticle:
+//  *      type:object
+//  *      required:
+//  *         -title
+//  *         -author
+//  *      properties:
+//  *         id:
+//  *            type:string,
+//  *             description: the auto-generated id of the article
+//  *          title:
+//  *             type:string,
+//  *             description:  article title
+//  *           author:
+//  *               type:string   ,
+//  *              description: article author
+
+//  */
+
+router.get("/", auth, async (req, res) => {
   try {
     const courses = await Course.find().sort("name");
     res.send(courses);
@@ -15,17 +39,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/datail/:id", async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
 
-    res.send(course);
+    res.status(200).send(course);
   } catch (error) {
     res.send("error", error);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", [auth, adimnToken], async (req, res) => {
   console.log(req.body);
   // res.json(req.body);
 
@@ -40,7 +64,7 @@ router.post("/", async (req, res) => {
 
     res.send(newcourse);
   } catch (error) {
-    res.send("error", error);
+    res.json("This user is not allowed");
   }
 });
 
@@ -58,13 +82,13 @@ router.put("/:id", async (req, res) => {
     const updateCourse = await course.save();
     res.send(updateCourse);
   } catch (error) {
-    res.send("error", error);
+    res.status(500).send("error", error);
   }
 
   // let Course = courses.find((c) => c.id === parseInt(req.params.id));
 });
 
-router.delete("./:id", async (req, res) => {
+router.delete("/:id", [auth, adimnToken], async (req, res) => {
   const course = await Course.findByIdAndRemove(req.params.id);
 
   if (!course)

@@ -1,10 +1,3 @@
-// const jwt = require("jsonwebtoken");
-// const config = require("config");
-// const bcrypt = require("bcrypt");
-// const _ = require("lodash");
-// const mongoose = require("mongoose");
-// const express = require("express");
-// const Joi = require("joi");
 
 import Joi from "joi";
 
@@ -13,15 +6,16 @@ import bcrypt from "bcrypt";
 import _ from "lodash";
 import express from "express";
 
-import jwt from "jsonwebtoken";
-import jsonwebtoken from "jsonwebtoken";
 import User from "../modals/users.js";
-// const { sign } = require("jsonwebtoken");
-// const { validateToken } = require("../midleware/UserMiddleware");
 
-import { validateToken, adimnToken } from "../midleware/UserMiddleware.js";
+import validateToken from "../midleware/UserMiddleware.js";
 
-const router = express.Router();
+const  router = express.Router();
+
+router.get("/me", validateToken, async (req, res) => {
+  const user = await User.findById(req.user._id).select("_password");
+  res.status(200).json(user);
+});
 
 router.get("/", validateToken, async (req, res) => {
   try {
@@ -40,6 +34,7 @@ router.post("/", async (req, res) => {
   if (user) return res.status(400).send("arleady user registered");
 
   user = new User(
+
     _.pick(req.body, [
       "firstName",
       "lastName",
@@ -58,11 +53,8 @@ router.post("/", async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
 
   user = await user.save();
-  const accessToken = jwt.sign(
-    { email: user.email, id: user.id, name: user.name },
-    "UsersAuth"
-  );
-
+  const accessToken = user.generateAuthToken();
+  
   res.status(200).json({
     token: accessToken,
     //  name: user.name,
@@ -70,10 +62,12 @@ router.post("/", async (req, res) => {
     email: user.email,
   });
 
-  // const accessToken = jwt.sign({ _id: user._id }, config.has("jwtPrivateKey"));
-  // const accessToken = user.generateAuthToken();
+  // res.status(200).header("x-auth-token", accessToken).send({
+  //   token: accessToken,
 
-  // res.header("x-auth-token", accessToken).send(_.pick(user, ["name", "email"]));
+  //   id: user.id,
+  //   email: user.email,
+  // });
 
   res.json("user registered");
 });
@@ -99,11 +93,7 @@ router.post("/login", async (req, res) => {
 
     const validPassword = await bcrypt.compare(password, user.password);
 
-    // const accessToken = user.generateAuthToken();
-    const accessToken = jwt.sign(
-      { email: user.email, id: user.id, name: user.name },
-      "UsersAuth"
-    );
+    const accessToken = user.generateAuthToken();
 
     res.json({
       token: accessToken,

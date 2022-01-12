@@ -1,29 +1,37 @@
-// const config = require("config");
 import config from "config";
-
 import mongoose from "mongoose";
-// const mongoose = require("mongoose");
-
-// const helmet = require("helmet");
 import helmet from "helmet";
-
-// const morgan = require("morgan");
-
-// const express = require("express");
 import express from "express";
 import courses from "./routes/courses.js";
 import users from "./routes/users.js";
 import home from "./routes/home.js";
-
-// const courses = require("./routes/courses");
-// const users = require("./routes/users");
-// const home = require("./routes/home");
+// import swaggerJSDoc from "swagger-jsdoc";
+import swaggerDocument from "./swagger.json";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
+
+// const swaggerOptions = {
+//   swaggerDefinition: {
+//     info: {
+//       title: "blog API",
+
+//       description: "A simple express blog API",
+//       contact: {
+//         name: "tuyisingize benjamin",
+//       },
+//       server: ["http://localhost:4000"],
+//     },
+//   },
+//   apis: ["./routes/*.js"],
+// };
+
+// const specs = swaggerJSDoc(swaggerOptions);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/courses", courses);
 app.use("/api/users", users);

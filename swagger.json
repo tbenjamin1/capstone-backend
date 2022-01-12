@@ -1,0 +1,828 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0",
+        "title": "Portfolio",
+        "description": "My portofolio website blog Post system APIs",
+        "contact": {
+            "email": "tbenpollyl@gmail.com"
+        }
+    },
+    "host": "localhost:4000",
+    "basePath": "/",
+    "schemes": [
+        
+        "HTTP"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/users": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User Signup API",
+                "description": "User Signup ",
+                "operationId": "signup",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object that needed to create account",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Signup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User successfully created"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User get all users API",
+                "description": "Read all users ",
+                "operationId": "Read all users",
+                "responses": {
+                    "200": {
+                        "description": "Users successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        },
+
+        "/user/{id}": {
+
+            
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User get user by id API",
+                "description": "get user by id ",
+                "operationId": "get user by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "user object that need get user by id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user API",
+                "description": "Update user ",
+                "operationId": "Update user",
+                "parameters": [
+                    {
+                        "description": "user object Update",
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updateUser"
+                        }
+                    },
+                    {
+                        "description": "user object Update",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User successfully updated"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "delete user API",
+                "description": "delete user ",
+                "operationId": "delete user",
+                "parameters": [
+                    {
+                        "description": "user object deletion",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "no content"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "login user API",
+                "description": "login user",
+                "operationId": "login user",
+                "parameters": [
+                    {
+                        "description": "user object login use",
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loginUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "logged in successfully"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        },
+        "/post": {
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "User create post API",
+                "description": "User create post ",
+                "operationId": "create post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object that needed to create post",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/createPost"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User successfully created"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "User get all post API",
+                "description": "get all posts",
+                "operationId": "get all posts",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "posts successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        },
+        
+        "/post/{id}": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "User get post by id API",
+                "description": "get post by id ",
+                "operationId": "get post by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "user object that need get post by id",
+                        "required": true
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Update post API",
+                "description": "Update post ",
+                "operationId": "Update post",
+                "parameters": [
+                    {
+                        "description": "post object Update",
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updatePost"
+                        }
+                    },
+                    {
+                        "description": "post object Update",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Admin Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "post successfully updated"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "delete post API",
+                "description": "delete post",
+                "operationId": "delete post",
+                "parameters": [
+                    {
+                        "description": "post object deletion",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Admin Token"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "no content"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        },
+        "/comment": {
+            "post": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "User create comment API",
+                "description": "User create comment ",
+                "operationId": "create comment",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object that needed to create comment",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/createComment"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post successfully created"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "User get all comment API",
+                "description": "get all comments",
+                "operationId": "get all comments",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "comments successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        },
+        "/comment/{id}": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "User get comment by id API",
+                "description": "get comment by id ",
+                "operationId": "get comment by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "user object that need get comment by id",
+                        "required": true
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "comment successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Update comment API",
+                "description": "Update comment",
+                "operationId": "Update comment",
+                "parameters": [
+                    {
+                        "description": "comment object Update",
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updateComment"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    },
+                    {
+                        "description": "comment object Update",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comment successfully updated"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "delete comment API",
+                "description": "delete comment",
+                "operationId": "delete comment",
+                "parameters": [
+                    {
+                        "description": "comment object deletion",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "no content"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        },
+        "/message": {
+            "post": {
+                "tags": [
+                    "Message"
+                ],
+                "summary": "User create message API",
+                "description": "User create message ",
+                "operationId": "create message",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object that needed to create message",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/createMessage"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "message successfully created"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Message"
+                ],
+                "summary": "User get all message API",
+                "description": "get all messages",
+                "operationId": "get all messages",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Admin Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "messages successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        },
+        "/message/{id}": {
+            "get": {
+                "tags": [
+                    "Message"
+                ],
+                "summary": "User get message by id API",
+                "description": "get message by id ",
+                "operationId": "get message by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "user object that need get message by id",
+                        "required": true
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Admin Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "message successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Message"
+                ],
+                "summary": "Update message API",
+                "description": "Update message",
+                "operationId": "Update message",
+                "parameters": [
+                    {
+                        "description": "message object Update",
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updateMessage"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    },
+                    {
+                        "description": "message object Update",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "message successfully updated"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Message"
+                ],
+                "summary": "delete message API",
+                "description": "delete message",
+                "operationId": "delete message",
+                "parameters": [
+                    {
+                        "description": "message object deletion",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Admin Token"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "no content"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            }
+        }
+        
+    },
+    "definitions": {
+        "Signup": {
+            "type": "object",
+            "properties": {
+                 "lastName": {
+                    "type": "string",
+                    "required": true
+                },
+                 "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "email": {
+                    "type": "string",
+                    "required": true
+                },
+                "password": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "updateUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "required": true
+                },
+                "password": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "loginUser":{
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "required": true
+                },
+                "password": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "createPost": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "required": true
+                },
+                "content": {
+                    "type": "string",
+                    "required": true
+                },
+                "author": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "updatePost": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "required": true
+                },
+                "content": {
+                    "type": "string",
+                    "required": true
+                },
+                "author": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+
+        "createComment": {
+            "type": "object",
+            "properties": {
+                "fullname": {
+                    "type": "string",
+                    "required": true
+                },
+                "suggestion": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "updateComment": {
+            "type": "object",
+            "properties": {
+                "fullname": {
+                    "type": "string",
+                    "required": true
+                },
+                "suggestion": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+
+        "createMessage": {
+            "type": "object",
+            "properties": {
+                "fullname": {
+                    "type": "string",
+                    "required": true
+                },
+                "email": {
+                    "type": "string",
+                    "required": true
+                },
+                "phone": {
+                    "type": "string",
+                    "required": true
+                },
+                "message": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "updateMessage": {
+            "type": "object",
+            "properties": {
+                "fullname": {
+                    "type": "string",
+                    "required": true
+                },
+                "email": {
+                    "type": "string",
+                    "required": true
+                },
+                "phone": {
+                    "type": "string",
+                    "required": true
+                },
+                "message": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        }
+    }
+}

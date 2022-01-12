@@ -4,10 +4,9 @@
   "description": "",
   "main": "app.js",
   "type": "module",
-
   "scripts": {
-     "start": "babel-node ./index.js",
-    "dev"  : "nodemon --exec npm start"
+    "start": "babel-node --experimental-json-modules ./index.js",
+    "dev": "nodemon --exec npm start"
   },
   "author": "benjamin",
   "license": "ISC",
@@ -27,6 +26,8 @@
     "nodemon": "^2.0.15",
     "pug": "^3.0.2",
     "req": "^0.1.4",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0",
     "underscore": "^1.13.2"
   },
   "devDependencies": {
