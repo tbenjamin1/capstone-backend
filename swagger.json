@@ -56,6 +56,13 @@
                 "summary": "User get all users API",
                 "description": "Read all users ",
                 "operationId": "Read all users",
+                "parameters":[{
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "user Token"
+                    }],
                 "responses": {
                     "200": {
                         "description": "Users successfully retrieved"

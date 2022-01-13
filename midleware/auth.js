@@ -22,7 +22,7 @@ const adimnToken = (req, res, next) => {
   if (!accessToken) return res.json({ error: "Not logged in" });
 
   try {
-    const validToken = verify(accessToken, "UsersAuth");
+  const validToken = jwt.verify(accessToken, "UsersAuth");
     req.user = validToken;
     if (req.user.isAdmin === "true") {
       return next();
