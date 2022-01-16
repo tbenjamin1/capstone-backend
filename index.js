@@ -1,21 +1,22 @@
-const config = require("config");
-const mongoose = require("mongoose");
+import config from "config";
+import mongoose from "mongoose";
+import helmet from "helmet";
+import express from "express";
+import courses from "./routes/courses.js";
+import users from "./routes/users.js";
+import home from "./routes/home.js";
 
-const helmet = require("helmet");
-
-const morgan = require("morgan");
-
-const express = require("express");
+import swaggerDocument from "./swagger.json";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
-
-const courses = require("./routes/courses");
-const users = require("./routes/users");
-const home = require("./routes/home");
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
+
+
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/courses", courses);
 app.use("/api/users", users);

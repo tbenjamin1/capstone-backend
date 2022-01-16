@@ -1,17 +1,21 @@
-const jwt = require("jsonwebtoken");
-const config = require("config");
-const bcrypt = require("bcrypt");
-const _ = require("lodash");
-const mongoose = require("mongoose");
-const express = require("express");
-const Joi = require("joi");
 
-const { sign } = require("jsonwebtoken");
-const { validateToken } = require("../midleware/UserMiddleware");
+import Joi from "joi";
 
-const router = express.Router();
+import config from "config";
+import bcrypt from "bcrypt";
+import _ from "lodash";
+import express from "express";
 
-const User = require("../modals/users");
+import User from "../modals/users.js";
+
+import validateToken from "../midleware/UserMiddleware.js";
+
+const  router = express.Router();
+
+router.get("/me", validateToken, async (req, res) => {
+  const user = await User.findById(req.user._id).select("_password");
+  res.status(200).json(user);
+});
 
 router.get("/", validateToken, async (req, res) => {
   try {
@@ -30,6 +34,7 @@ router.post("/", async (req, res) => {
   if (user) return res.status(400).send("arleady user registered");
 
   user = new User(
+
     _.pick(req.body, [
       "firstName",
       "lastName",
@@ -48,10 +53,21 @@ router.post("/", async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
 
   user = await user.save();
+  const accessToken = user.generateAuthToken();
+  
+  res.status(200).json({
+    token: accessToken,
+    //  name: user.name,
+    id: user.id,
+    email: user.email,
+  });
 
-  const token = jwt.sign({ _id: user._id }, config.has("jwtPrivateKey"));
+  // res.status(200).header("x-auth-token", accessToken).send({
+  //   token: accessToken,
 
-  // res.header("x-auth-token", token).send(_.pick(user, ["name", "email"]));
+  //   id: user.id,
+  //   email: user.email,
+  // });
 
   res.json("user registered");
 });
@@ -77,11 +93,7 @@ router.post("/login", async (req, res) => {
 
     const validPassword = await bcrypt.compare(password, user.password);
 
-    const token = user.generateAuthToken();
-    // const accessToken = sign(
-    //   { email: user.email, id: user.id, name: user.name },
-    //   "UsersAuth"
-    // );
+    const accessToken = user.generateAuthToken();
 
     res.json({
       token: accessToken,
@@ -93,7 +105,8 @@ router.post("/login", async (req, res) => {
     if (!validPassword)
       return res.status(400).send("invalid email or password");
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).send("Server Error");
   }
 });
 
@@ -107,4 +120,4 @@ router.delete("/delete/:id", validateToken, async (req, res) => {
   res.json("user deleted");
 });
 
-module.exports = router;
+export default router;

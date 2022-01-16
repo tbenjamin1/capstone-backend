@@ -1,6 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import sign from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-const Joi = require("joi");
+// const Joi = require("joi");
 // schema for our database
 
 const usersSchema = new mongoose.Schema({
@@ -30,16 +32,17 @@ const usersSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 1024,
   },
+  isAdmin: Boolean,
 });
 
 usersSchema.methods.generateAuthToken = function () {
-  const accessToken = sign(
-    { email: user.email, id: this.id, name: user.name },
+  const accessToken = jwt.sign(
+    { email: this.email, id: this.id, isAdmin: this.isAdmin },
     "UsersAuth"
   );
   return accessToken;
 };
-
 // end here
 
-module.exports = mongoose.model("User", usersSchema);
+const User = mongoose.model("User", usersSchema);
+export default User;
