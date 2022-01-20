@@ -12,15 +12,24 @@ import validateToken from "../midleware/UserMiddleware.js";
 
 const  router = express.Router();
 
-router.get("/me", validateToken, async (req, res) => {
-  const user = await User.findById(req.user._id).select("_password");
-  res.status(200).json(user);
-});
+// router.get("/me", validateToken, async (req, res) => {
+//   const user = await User.findById(req.user._id).select("_password");
+//   res.status(200).json(user);
+// });
 
-router.get("/", validateToken, async (req, res) => {
+router.get("/get-users", validateToken, async (req, res) => {
   try {
     const users = await User.find().sort("name");
-    res.send(users);
+    res.status(201).json({message:"successfully users retrieved" ,users});
+  } catch (error) {
+    res.send("error", error);
+  }
+});
+
+router.get("/get-user/:id", validateToken, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(201).json({message:"successfully single users retrieved" ,users});
   } catch (error) {
     res.send("error", error);
   }
@@ -55,9 +64,9 @@ router.post("/post/user", async (req, res) => {
   user = await user.save();
   const accessToken = user.generateAuthToken();
   
-  res.sendStatus(200).json({
-    token: accessToken,
-    //  name: user.name,
+  res.json(200,{
+    // token: accessToken,
+     name: user.name,
     id: user.id,
     email: user.email,
   });
@@ -109,9 +118,42 @@ router.post("/login", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+//update user
+router.put("/update/user/:id", async (req, res) => {
+
+
+  // validate
+ 
+  // const validation = validate(req.body);
+
+  // if (validation.error) return res.status(400).send("all parameters should be  required ");
+
+
+  try {
+
+    console.log(req.params.id)
+    const user = await User.findByIdAndUpdate(req.params.id);
+
+    user.name = req.body.name;
+
+    const updateUser= await user.save();
+
+    res.status(201).json({message:"successfully updated" ,updatedUser});
+
+   
+  } catch (error) {
+   console.log(error)
+  }
+
+
+
+  // let Course = blogs.find((c) => c.id === parseInt(req.params.id));
+
+
+});
 
 //delete
-router.delete("/delete/:id", validateToken, async (req, res) => {
+router.delete("/del/user/:id", validateToken, async (req, res) => {
   const user = await User.findByIdAndRemove(req.params.id);
 
   if (!user)

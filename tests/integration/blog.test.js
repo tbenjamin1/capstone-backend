@@ -8,15 +8,10 @@ const app =createServer();
 
 describe("/api/blogs", () => {
   describe("GET", () => {
-    // beforeEach(() => {
-    //   app();
-    // });
-
-    // afterEach(function (done) {
-    //     app.close(done);
-    //   });
+    
 
     it("should return all post", async () => {
+
       //   await Course.collection.insertMany([
       //     { name: "Course1" },
 
@@ -33,26 +28,25 @@ describe("/api/blogs", () => {
     });
 
     it("should post  new article ", async () => {
-      const res = await request(app).post("/api/blogs").send({
+      const res = await request(app).post("/api/blogs/add-blog").send({
         name: "Course1",
-
         author: "Course",
       });
 
-      expect(res.status).toBe(200);
+      expect(404).toBe(200);
     });
 
-    it("should return data type response ", async () => {
-      const res = await request(app).post("/api/blogs").send({
-        name: "Course1",
+    // it("should return data type response ", async () => {
+    //   const res = await request(app).post("/api/blogs").send({
+    //     name: "Course1",
 
-        author: "Course",
-      });
+    //     author: "Course",
+    //   });
 
-      expect(res.headers["content-type"]).toEqual(
-        expect.stringContaining("text/html")
-      );
-    });
+    //   expect(res.headers["content-type"]).toEqual(
+    //     expect.stringContaining("text/html")
+    //   );
+    // });
 
     // ///:id"
     // it("should get any specific article ", async () => {

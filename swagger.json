@@ -71,7 +71,69 @@
                         "description": "Bad request,Invalid input"
                     }
                 }
+            },
+            
+
+
+            "delete":{
+                "tags": [
+                    "User"
+                ],
+                "summary": "delete user API",
+                "description": "delete user ",
+                "operationId": "delete user",
+                "parameters": [
+                    {
+                        "description": "user object deletion",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "no content"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
+            },
+            "put":{
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user API",
+                "description": "Update user ",
+                "operationId": "Update user",
+                "parameters": [
+                    {
+                        "description": "user object Update",
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updateUser"
+                        }
+                    },
+                    {
+                        "description": "user object Update",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User successfully updated"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
             }
+
+
         },
 
         "/user/{id}": {
@@ -128,30 +190,6 @@
                 "responses": {
                     "200": {
                         "description": "User successfully updated"
-                    },
-                    "400": {
-                        "description": "Bad request,Invalid input"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "delete user API",
-                "description": "delete user ",
-                "operationId": "delete user",
-                "parameters": [
-                    {
-                        "description": "user object deletion",
-                        "in": "path",
-                        "name": "id",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "no content"
                     },
                     "400": {
                         "description": "Bad request,Invalid input"
@@ -247,13 +285,37 @@
                         "description": "Bad request,Invalid input"
                     }
                 }
+            },
+            "delete":{
+                "tags": [
+                    "blog"
+                ],
+                "summary": "delete user API",
+                "description": "delete blog ",
+                "operationId": "delete blog",
+                "parameters": [
+                    {
+                        "description": "blog object deletion",
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "no content"
+                    },
+                    "400": {
+                        "description": "Bad request,Invalid input"
+                    }
+                }
             }
         },
         
         "/post/{id}": {
             "get": {
                 "tags": [
-                    "Post"
+                    "blog"
                 ],
                 "summary": "User get post by id API",
                 "description": "get post by id ",
@@ -730,11 +792,15 @@
         "createPost": {
             "type": "object",
             "properties": {
-                "title": {
+                "name": {
                     "type": "string",
                     "required": true
                 },
-                "content": {
+                "summary": {
+                    "type": "string",
+                    "required": true
+                },
+                "body": {
                     "type": "string",
                     "required": true
                 },
@@ -747,11 +813,15 @@
         "updatePost": {
             "type": "object",
             "properties": {
-                "title": {
+                "name": {
                     "type": "string",
                     "required": true
                 },
-                "content": {
+                "summary": {
+                    "type": "string",
+                    "required": true
+                },
+                "body": {
                     "type": "string",
                     "required": true
                 },

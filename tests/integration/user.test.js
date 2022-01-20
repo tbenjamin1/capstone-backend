@@ -35,48 +35,50 @@ describe("/api/users", () => {
     })
 
 
-    it(" when the user password and username is missing", async() => {
-        const response = await request(app).post("/post/user").send({
+    // it(" when the user password and username is missing", async() => {
+    //     const response = await request(app).post("/post/user").send({
             
             
-            email: "tbemmmmm@gmail.com",
+    //         email: "tbemmmmm@gmail.com",
           
-        })
-        console.log(response)
+    //     })
+    //     console.log(response)
 
-      expect(response.status).toBe(404)
+    //   expect(response.status).toBe(404)
       
 
 
-    })
+    // })
 
     it(" test response with 200 status cose", async() => {
 
+      console.log("")
         const response = await request(app).post("/post/user").send({
             
             firstName: "igitabohhh",
+
             lastName: "agbyjjjjjhbihuinhunh",
+
             email: "tbkkkkmm@gmail.com",
+            
             password: "benjkamin"
         })
-      
-
-      expect(response.statusCode).toBe(200)
+      expect(404).toBe(200)
       
 
     })
-     it("should return data type response ", async () => {
-      const res = await request(app).post("/post/user").send({
-        firstName: "igitabo",
-        lastName: "agbyighbbihbihuinhunh",
-        email: "tbemmmmm@gmail.com",
-        password: "benjamin"
-      });
+    //  it("should return data type response ", async () => {
+    //   const res = await request(app).post("/post/user").send({
+    //     firstName: "igitabo",
+    //     lastName: "agbyighbbihbihuinhunh",
+    //     email: "tbemmmmm@gmail.com",
+    //     password: "benjamin"
+    //   });
 
-      expect(res.headers["content-type"]).toEqual(
-        expect.stringContaining("text")
-      );
-    });
+    //   expect(res.headers["content-type"]).toEqual(
+    //     expect.stringContaining("text")
+    //   );
+    // });
 
 
 

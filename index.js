@@ -30,20 +30,7 @@ mongoose
   });
 
 
-// mongoose
 
-
-//   .connect("mongodb://localhost:27017/capstoneproject")
-//   .then(() => {
-//     console.log("connected to mangodb");
-//   })
-
-//   .catch((error) => {
-//     console.log("could not be connected to mongodb", error);
-//   });
-
-
-// end here
 
 
 const port = process.env.PORT || 4000;
