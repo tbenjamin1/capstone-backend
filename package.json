@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest --watchAll ",
-    "start": "babel-node --experimental-json-modules ./index.js",
+    "start": "babel -node --experimental-specifier-resolution=node ./index.js",
     "dev": "nodemon --exec npm start"
   },
   "author": "benjamin",
@@ -21,10 +21,10 @@
     "joi": "^17.5.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "mongodb": "^4.2.2",
-    "mongoose": "^6.1.4",
+    "mongodb": "^4.3.0",
+    "mongodb-memory-server": "^8.2.0",
+    "mongoose": "^6.1.7",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.15",
     "pug": "^3.0.2",
     "req": "^0.1.4",
     "swagger-jsdoc": "^6.1.0",
@@ -37,6 +37,11 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.8",
     "@babel/runtime": "^7.16.7",
-    "jest": "^27.4.7"
+    "@types/jest": "^27.4.0",
+    "@types/supertest": "^2.0.11",
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2",
+    "ts-jest": "^27.1.3"
   }
 }

@@ -26,7 +26,7 @@ router.get("/", validateToken, async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/post/user", async (req, res) => {
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send("name should be required ");
 
@@ -55,7 +55,7 @@ router.post("/", async (req, res) => {
   user = await user.save();
   const accessToken = user.generateAuthToken();
   
-  res.status(200).json({
+  res.sendStatus(200).json({
     token: accessToken,
     //  name: user.name,
     id: user.id,

@@ -188,7 +188,7 @@
                 }
             }
         },
-        "/post": {
+        "/add-blog": {
             "post": {
                 "tags": [
                     "Post"

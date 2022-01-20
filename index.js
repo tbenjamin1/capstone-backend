@@ -1,46 +1,52 @@
-import config from "config";
 import mongoose from "mongoose";
-import helmet from "helmet";
-import express from "express";
-import courses from "./routes/courses.js";
+import blogs from "./routes/blogs.js";
 import users from "./routes/users.js";
 import home from "./routes/home.js";
-
 import swaggerDocument from "./swagger.json";
 import swaggerUi from "swagger-ui-express";
-
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
-
+import createServer from './utils/server.js'
+  
+const app = createServer();
 
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-app.use("/api/courses", courses);
+app.use("/api/blogs", blogs);
 app.use("/api/users", users);
 app.use("/", home);
 
-if (!config.has("jwtPrivateKey")) {
-  console.log("fATAL ERROR:  jwtPrivateKey is not defined");
-  process.exit(1);
-}
 
-/// connection with data base
+
+
+// connection with  mongodatabase
+
+const dbUrl ="mongodb+srv://benjamin:12345@cluster0.jgjow.mongodb.net/capstonebacked?retryWrites=true&w=majority";
 
 mongoose
-  .connect("mongodb://localhost/posts")
+  .connect(dbUrl)
   .then(() => {
     console.log("connected to mangodb");
-  })
-
-  .catch((error) => {
+  }).catch((error) => {
     console.log("could not be connected to mongodb", error);
   });
 
+
+// mongoose
+
+
+//   .connect("mongodb://localhost:27017/capstoneproject")
+//   .then(() => {
+//     console.log("connected to mangodb");
+//   })
+
+//   .catch((error) => {
+//     console.log("could not be connected to mongodb", error);
+//   });
+
+
 // end here
 
-const port = process.env.PORT || 4000;
 
+const port = process.env.PORT || 4000;
+ 
 app.listen(port, () => console.log(`listening on port ${port} ....`));
+
