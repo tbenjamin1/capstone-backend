@@ -1,5 +1,5 @@
 # ##capstone-backend
-##My-brand-server
+# # My-brand-server
 This Repo is for my personal website and blog's API
 
 ##Technologies used
@@ -12,7 +12,7 @@ Mongo Db
 mongoose as ORM
 markdown for README.md file
 
-##How to test it manually
+# # How to test it manually
 To test this do the following:
 
 Clone this repo
