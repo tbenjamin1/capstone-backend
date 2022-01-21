@@ -1,5 +1,5 @@
 # ##capstone-backend
-# # My-brand-server
+
 This Repo is for my personal website and blog's API
 
 ##Technologies used
