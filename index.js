@@ -4,14 +4,19 @@ import users from "./routes/users.js";
 import home from "./routes/home.js";
 import swaggerDocument from "./swagger.json";
 import swaggerUi from "swagger-ui-express";
-import createServer from './utils/server.js'
-  
+import createServer from './utils/server.js';
+import message from'./routes/messages.js';
+
+
+
 const app = createServer();
 
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/blogs", blogs);
 app.use("/api/users", users);
+app.use("/api/message", message);
+
 app.use("/", home);
 
 

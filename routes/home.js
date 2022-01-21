@@ -5,7 +5,7 @@ import express from "express";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send("hello ben");
+  res.send("hello  welcome to my potfolio");
 });
 
 export default router;
