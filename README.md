@@ -11,6 +11,15 @@ Mongo Db
 
 mongoose as ORM
 markdown for README.md file
+##Technologies used
+Node js (express)
+
+bcrypt
+passport and jwt
+Mongo Db
+
+mongoose as ORM
+markdown for README.md file
 
 # # How to test it manually
 To test this do the following:
