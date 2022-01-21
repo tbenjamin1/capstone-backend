@@ -581,7 +581,7 @@
                 }
             }
         },
-        "/message": {
+        "/api/message": {
             "post": {
                 "tags": [
                     "Message"
@@ -862,15 +862,15 @@
         "createMessage": {
             "type": "object",
             "properties": {
-                "fullname": {
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "lastName": {
                     "type": "string",
                     "required": true
                 },
                 "email": {
-                    "type": "string",
-                    "required": true
-                },
-                "phone": {
                     "type": "string",
                     "required": true
                 },
@@ -883,15 +883,15 @@
         "updateMessage": {
             "type": "object",
             "properties": {
-                "fullname": {
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "lastName": {
                     "type": "string",
                     "required": true
                 },
                 "email": {
-                    "type": "string",
-                    "required": true
-                },
-                "phone": {
                     "type": "string",
                     "required": true
                 },
