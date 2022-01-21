@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest --watchAll jest  --coverage ",
-    "start": "babel -node --experimental-specifier-resolution=node ./index.js",
+    "start": "babel-node ./index.js",
     "dev": "nodemon --exec npm start"
   },
   "author": "benjamin",
