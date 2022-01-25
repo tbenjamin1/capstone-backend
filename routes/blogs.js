@@ -28,12 +28,10 @@ router.get("/get-blog", async (req, res) => {
 
 });
 
-router.get("/datail/:id", async (req, res) => {
+router.get("/singlepost/:id", async (req, res) => {
 
-
-
-  try {
-    const blog = await Blog.findById(req.params.id);
+try{
+  const blog = await Blog.findById(req.params.id);
 
     res.status(201).json({message:"single post successfully",blog});
 
@@ -76,7 +74,7 @@ router.post("/add-blog", async (req, res) => {
 
 // updTE
 
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id",auth, async (req, res) => {
 
 
   // validate
@@ -109,7 +107,7 @@ router.put("/update/:id", async (req, res) => {
 
 });
 
-router.delete("/delete/:id",  async (req, res) => {
+router.delete("/delete/:id", auth, async (req, res) => {
 
 
   const blog = await Blog.findByIdAndRemove(req.params.id);

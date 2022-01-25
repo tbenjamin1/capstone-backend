@@ -39,7 +39,7 @@ mongoose.connect("mongodb://localhost/posts").then(function () {
   console.log("could not be connected to mongodb", error);
 }); // end here
 
-var port = process.env.PORT || 4000;
+var port = process.env.PORT || 5000;
 app.listen(port, function () {
   return console.log("listening on port ".concat(port, " ...."));
 });

@@ -17,7 +17,7 @@ const  router = express.Router();
 //   res.status(200).json(user);
 // });
 
-router.get("/get-users", validateToken, async (req, res) => {
+router.get("/get-users", async (req, res) => {
   try {
     const users = await User.find().sort("name");
     res.status(201).json({message:"successfully users retrieved" ,users});
@@ -65,7 +65,7 @@ router.post("/post/user", async (req, res) => {
   const accessToken = user.generateAuthToken();
   
   res.json(200,{
-    // token: accessToken,
+    token: accessToken,
      name: user.name,
     id: user.id,
     email: user.email,
@@ -92,7 +92,7 @@ const validateUser = (userdata) => {
   return JoiSchema.validate(userdata);
 };
 
-router.post("/login", async (req, res) => {
+router.post("/login",async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -105,9 +105,10 @@ router.post("/login", async (req, res) => {
     const accessToken = user.generateAuthToken();
 
     res.json({
+      
+      message:"user successfully logged in",
       token: accessToken,
-      name: user.name,
-      id: user.id,
+      
       email: user.email,
     });
 

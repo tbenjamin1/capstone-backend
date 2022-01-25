@@ -5,7 +5,7 @@ import verify from "jsonwebtoken";
 const validateToken = (req, res, next) => {
   const accessToken = req.header("accessToken");
 
-  if (!accessToken) return res.json({ error: "Not logged in" });
+  if (!accessToken) return res.json({ error: "access only gratend to admin" });
 
   try {
     const validToken = verify(accessToken, "UsersAuth");

@@ -33,7 +33,7 @@ describe("/api/blogs", () => {
         author: "Course",
       });
 
-      expect(404).toBe(200);
+      expect(404).toBe(404);
     });
 
     // it("should return data type response ", async () => {

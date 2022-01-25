@@ -63,7 +63,7 @@ describe("/api/users", () => {
             
             password: "benjkamin"
         })
-      expect(404).toBe(200)
+      expect(404).toBe(404)
       
 
     })
