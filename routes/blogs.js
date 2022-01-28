@@ -107,7 +107,7 @@ router.put("/update/:id",auth, async (req, res) => {
 
 });
 
-router.delete("/delete/:id", auth, async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
 
 
   const blog = await Blog.findByIdAndRemove(req.params.id);
